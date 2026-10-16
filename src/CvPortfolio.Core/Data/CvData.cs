@@ -36,12 +36,12 @@ public static class CvData
     {
         new(
             Role: new("Desarrollador de software Visual FoxPro", "Visual FoxPro Software Developer"),
-            Company: "Hospital Español, Sistemas (Rosario, Argentina)",
+            Company: "Hospital Español (Rosario, Argentina)",
             StartYear: 2021,
             EndYear: null,
             Description: new(
-                "Visual FoxPro: manejo de archivos, envío de mails, automatización, circuitos de trabajo, metodologías ágiles y SOLID. PostgreSQL: CRUD y subconsultas. Help desk técnico: gestión de software, reparación de PC e instalación de puestos de trabajo.",
-                "Visual FoxPro: file handling, email sending, automation, work flows, agile methodologies and SOLID. PostgreSQL: CRUD and subqueries. Technical help desk: software management, PC repair and workstation setup."))
+                "Desarrollo y mantenimiento de aplicaciones en Visual FoxPro, orientadas a la automatización de procesos, el manejo de archivos, el envío de correos y los circuitos de trabajo, aplicando metodologías ágiles y principios SOLID. Desarrollo de consultas, subconsultas y operaciones CRUD sobre PostgreSQL. Soporte técnico (help desk): gestión de software, reparación de equipos e instalación de puestos de trabajo.",
+                "Development and maintenance of Visual FoxPro applications focused on process automation, file handling, email delivery and work flows, applying agile methodologies and SOLID principles. Development of queries, subqueries and CRUD operations on PostgreSQL. Technical support (help desk): software management, PC repair and workstation setup."))
     };
 
     public static IReadOnlyList<Education> Education { get; } = new List<Education>
@@ -63,19 +63,28 @@ public static class CvData
     public static IReadOnlyList<SkillGroup> Skills { get; } = new List<SkillGroup>
     {
         new(new("Lenguajes y bases de datos", "Languages and databases"),
-            new[] { "Visual FoxPro 6/9 (4 años)", "PostgreSQL (4 años)", "HTML/CSS (2 años)" }),
-        new(new("Sistemas operativos", "Operating systems"),
-            new[] { "Windows (4 años)", "Linux / Kali Linux (1 año)" }),
-        new(new("Cursos", "Courses"),
-            new[]
+            new LocalizedText[]
             {
-                "JavaScript desde Cero",
-                "Introducción a la Ciberseguridad",
-                "Introducción al Pentesting",
-                "Administrador de Redes Linux y Ciberseguridad",
-                "Full Ethical Hacking"
+                new("Visual FoxPro 6/9 (4 años)", "Visual FoxPro 6/9 (4 years)"),
+                new("PostgreSQL (4 años)", "PostgreSQL (4 years)"),
+                new("HTML/CSS (2 años)", "HTML/CSS (2 years)")
             }),
-        new(new("Idiomas", "Languages"),
-            new[] { "Inglés técnico" })
+        new(new("Sistemas operativos", "Operating systems"),
+            new LocalizedText[]
+            {
+                new("Windows (4 años)", "Windows (4 years)"),
+                new("Linux / Kali Linux (1 año)", "Linux / Kali Linux (1 year)")
+            }),
+        new(new("Cursos", "Courses"),
+            new LocalizedText[]
+            {
+                new("JavaScript desde Cero", "JavaScript from Scratch"),
+                new("Introducción a la Ciberseguridad", "Introduction to Cybersecurity"),
+                new("Introducción al Pentesting", "Introduction to Pentesting"),
+                new("Administrador de Redes Linux y Ciberseguridad", "Linux Network Administrator and Cybersecurity"),
+                LocalizedText.Same("Full Ethical Hacking")
+            }),
+        new(new("Idiomas", "Spoken languages"),
+            new LocalizedText[] { new("Inglés técnico", "Technical English") })
     };
 }

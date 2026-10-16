@@ -1,3 +1,3 @@
 namespace CvPortfolio.Core.Models;
 
-public sealed record SkillGroup(LocalizedText Name, IReadOnlyList<string> Skills);
+public sealed record SkillGroup(LocalizedText Name, IReadOnlyList<LocalizedText> Skills);

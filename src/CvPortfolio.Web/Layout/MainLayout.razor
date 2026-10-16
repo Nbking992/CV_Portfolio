@@ -1,8 +1,10 @@
 @inherits LayoutComponentBase
 @implements IDisposable
 @inject ILanguageService Lang
+@inject ICvService Cv
 
 <header class="topbar">
+    <span class="brand">@Cv.GetProfile().FullName</span>
     <nav>
         <a href="#about">@Lang.Label("about")</a>
         <a href="#projects">@Lang.Label("projects")</a>
@@ -16,6 +18,29 @@
 <main class="container">
     @Body
 </main>
+
+<nav class="bottom-nav" aria-label="Secciones">
+    <a href="#about">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-7 8-7s8 3 8 7" /></svg>
+        <span>@Lang.Label("about")</span>
+    </a>
+    <a href="#projects">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+        <span>@Lang.Label("projects")</span>
+    </a>
+    <a href="#experience">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" /></svg>
+        <span>@Lang.Label("experience")</span>
+    </a>
+    <a href="#education">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z" /><path d="M6 11v5c0 1 3 3 6 3s6-2 6-3v-5" /></svg>
+        <span>@Lang.Label("education")</span>
+    </a>
+    <a href="#skills">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z" /></svg>
+        <span>@Lang.Label("skills")</span>
+    </a>
+</nav>
 
 @code {
     protected override void OnInitialized() => Lang.Changed += OnLanguageChanged;

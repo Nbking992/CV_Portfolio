@@ -1,0 +1,17 @@
+@implements IDisposable
+@inject ILanguageService Lang
+
+<div class="lang-switch" role="group" aria-label="Language">
+    <button class="@Css(Language.Es)" @onclick="() => Lang.Set(Language.Es)">ES</button>
+    <button class="@Css(Language.En)" @onclick="() => Lang.Set(Language.En)">EN</button>
+</div>
+
+@code {
+    private string Css(Language l) => Lang.Current == l ? "active" : string.Empty;
+
+    protected override void OnInitialized() => Lang.Changed += Refresh;
+
+    private void Refresh() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Lang.Changed -= Refresh;
+}

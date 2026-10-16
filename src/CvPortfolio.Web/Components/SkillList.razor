@@ -1,0 +1,20 @@
+@inject ILanguageService Lang
+
+<Section Id="skills" Title="@Lang.Label("skills")">
+    @foreach (var group in Groups)
+    {
+        <div class="entry">
+            <h3>@Lang.T(group.Name)</h3>
+            <ul class="tags">
+                @foreach (var skill in group.Skills)
+                {
+                    <li>@skill</li>
+                }
+            </ul>
+        </div>
+    }
+</Section>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<SkillGroup> Groups { get; set; } = Array.Empty<SkillGroup>();
+}

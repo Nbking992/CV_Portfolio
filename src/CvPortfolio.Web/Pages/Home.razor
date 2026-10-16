@@ -1,0 +1,20 @@
+@page "/"
+@implements IDisposable
+@inject ICvService Cv
+@inject ILanguageService Lang
+
+<PageTitle>@Cv.GetProfile().FullName · CV</PageTitle>
+
+<ProfileHeader Profile="Cv.GetProfile()" />
+<ProjectList Projects="Cv.GetProjects()" />
+<ExperienceList Items="Cv.GetExperiences()" />
+<EducationList Items="Cv.GetEducation()" />
+<SkillList Groups="Cv.GetSkills()" />
+
+@code {
+    protected override void OnInitialized() => Lang.Changed += Refresh;
+
+    private void Refresh() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Lang.Changed -= Refresh;
+}

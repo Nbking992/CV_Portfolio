@@ -1,0 +1,21 @@
+@inject ILanguageService Lang
+
+<Section Id="projects" Title="@Lang.Label("projects")">
+    @if (Projects.Count == 0)
+    {
+        <p>@Lang.Label("noProjects")</p>
+    }
+    else
+    {
+        <div class="grid">
+            @foreach (var project in Projects)
+            {
+                <ProjectCard Project="project" @key="project.Id" />
+            }
+        </div>
+    }
+</Section>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<Project> Projects { get; set; } = Array.Empty<Project>();
+}

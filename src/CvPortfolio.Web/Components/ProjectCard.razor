@@ -1,0 +1,29 @@
+@inject ILanguageService Lang
+
+<article class="card">
+    <header>
+        <h3>@Lang.T(Project.Name)</h3>
+        <span class="year">@Project.Year</span>
+    </header>
+    <p>@Lang.T(Project.Description)</p>
+    <ul class="tags">
+        @foreach (var tech in Project.Technologies)
+        {
+            <li>@tech</li>
+        }
+    </ul>
+    <footer>
+        @if (Project.RepositoryUrl is not null)
+        {
+            <a href="@Project.RepositoryUrl" target="_blank" rel="noopener">@Lang.Label("repository")</a>
+        }
+        @if (Project.DemoUrl is not null)
+        {
+            <a href="@Project.DemoUrl" target="_blank" rel="noopener">@Lang.Label("demo")</a>
+        }
+    </footer>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Project Project { get; set; } = default!;
+}

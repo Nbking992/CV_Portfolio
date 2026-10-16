@@ -1,0 +1,15 @@
+@inject ILanguageService Lang
+
+<Section Id="education" Title="@Lang.Label("education")">
+    @foreach (var item in Items)
+    {
+        <div class="entry">
+            <h3>@Lang.T(item.Title) · @item.Institution</h3>
+            <span class="period">@item.StartYear – @(item.EndYear?.ToString() ?? Lang.Label("present"))</span>
+        </div>
+    }
+</Section>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<Education> Items { get; set; } = Array.Empty<Education>();
+}

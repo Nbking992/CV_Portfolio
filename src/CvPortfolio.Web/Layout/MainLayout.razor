@@ -1,0 +1,26 @@
+@inherits LayoutComponentBase
+@implements IDisposable
+@inject ILanguageService Lang
+
+<header class="topbar">
+    <nav>
+        <a href="#about">@Lang.Label("about")</a>
+        <a href="#projects">@Lang.Label("projects")</a>
+        <a href="#experience">@Lang.Label("experience")</a>
+        <a href="#education">@Lang.Label("education")</a>
+        <a href="#skills">@Lang.Label("skills")</a>
+    </nav>
+    <LanguageSwitcher />
+</header>
+
+<main class="container">
+    @Body
+</main>
+
+@code {
+    protected override void OnInitialized() => Lang.Changed += OnLanguageChanged;
+
+    private void OnLanguageChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Lang.Changed -= OnLanguageChanged;
+}

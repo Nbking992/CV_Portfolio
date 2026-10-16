@@ -59,6 +59,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 }
 .hero .headline { color: var(--accent); font-size: clamp(1.05rem, 3vw, 1.3rem); font-weight: 600; margin: 8px 0 18px; }
 .hero p { max-width: 62ch; color: var(--muted); }
+.highlights { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 8px; }
+.highlights li { position: relative; padding-left: 22px; font-weight: 500; }
+.highlights li::before {
+    content: ""; position: absolute; left: 0; top: .6em; width: 10px; height: 10px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
 .links { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 22px 0 0; }
 .links li {
     display: inline-flex; align-items: center; padding: 7px 14px; border: 1px solid var(--border); background: var(--card);

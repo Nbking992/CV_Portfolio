@@ -10,17 +10,34 @@ public static class CvData
 {
     public static Profile Profile { get; } = new(
         FullName: "Federico Bonaldo",
-        Headline: new("Desarrollador de software", "Software Developer"),
+        Headline: new(
+            "Desarrollador de software y estudiante de ciberseguridad",
+            "Software Developer and Cybersecurity Student"),
         Summary: new(
-            "Desarrollador de software en el área de Sistemas del Hospital Español de Rosario, con experiencia en Visual FoxPro y PostgreSQL, y soporte técnico de infraestructura. Me estoy formando en ciberseguridad y pentesting.",
-            "Software developer in the Systems department of Hospital Español in Rosario, with experience in Visual FoxPro and PostgreSQL, plus IT infrastructure support. I am currently training in cybersecurity and pentesting."),
+            "Desarrollador de software en el área de Sistemas del Hospital Español de Rosario, con experiencia en Visual FoxPro y PostgreSQL, y soporte técnico de infraestructura. Me formo en ciberseguridad, hacking ético y pentesting, practicando con retos CTF.",
+            "Software developer in the Systems department of Hospital Español in Rosario, with experience in Visual FoxPro and PostgreSQL, plus IT infrastructure support. I am training in cybersecurity, ethical hacking and pentesting, practicing with CTF challenges."),
         Email: "bonaldo.federico.97@gmail.com",
         Location: "Rosario, Argentina",
         GitHubUrl: "https://github.com/Nbking992",
-        LinkedInUrl: "https://www.linkedin.com/in/federico-bonaldo");
+        LinkedInUrl: "https://www.linkedin.com/in/federico-bonaldo",
+        Highlights: new LocalizedText[]
+        {
+            new("Estudiante de ciberseguridad", "Cybersecurity student"),
+            new("Apasionado por el hacking ético y los CTFs", "Passionate about ethical hacking and CTFs"),
+            new("En constante aprendizaje", "Always learning")
+        });
 
     public static IReadOnlyList<Project> Projects { get; } = new List<Project>
     {
+        new(
+            Id: "bandit-overthewire",
+            Name: LocalizedText.Same("OverTheWire (Bandit)"),
+            Description: new(
+                "Resolución de los retos de Bandit, de OverTheWire, con writeups documentados paso a paso. Práctica de Linux, terminal y fundamentos de seguridad.",
+                "Solutions to the OverTheWire Bandit challenges with step-by-step writeups. Hands-on practice with Linux, the terminal and security fundamentals."),
+            Technologies: new[] { "Bash", "Linux", "SSH", "CTF" },
+            Year: 2026,
+            RepositoryUrl: "https://github.com/Nbking992/practice-over-the-wire"),
         new(
             Id: "cv-portfolio",
             Name: LocalizedText.Same("CV Portfolio"),
@@ -74,6 +91,16 @@ public static class CvData
             {
                 new("Windows (4 años)", "Windows (4 years)"),
                 new("Linux / Kali Linux (1 año)", "Linux / Kali Linux (1 year)")
+            }),
+        new(new("Ciberseguridad", "Cybersecurity"),
+            new LocalizedText[]
+            {
+                new("Linux y scripting", "Linux and scripting"),
+                new("Redes", "Networking"),
+                new("Resolución de retos (CTFs)", "Challenge solving (CTFs)"),
+                new("Fundamentos de seguridad informática", "Information security fundamentals"),
+                LocalizedText.Same("Bash"),
+                new("Git y GitHub", "Git and GitHub")
             }),
         new(new("Cursos", "Courses"),
             new LocalizedText[]

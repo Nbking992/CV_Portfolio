@@ -7,4 +7,5 @@ public sealed record Profile(
     string Email,
     string Location,
     string? GitHubUrl = null,
-    string? LinkedInUrl = null);
+    string? LinkedInUrl = null,
+    IReadOnlyList<LocalizedText>? Highlights = null);

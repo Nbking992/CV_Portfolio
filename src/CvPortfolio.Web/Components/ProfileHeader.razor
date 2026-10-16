@@ -4,6 +4,15 @@
     <h1>@Profile.FullName</h1>
     <p class="headline">@Lang.T(Profile.Headline)</p>
     <p>@Lang.T(Profile.Summary)</p>
+    @if (Profile.Highlights is { Count: > 0 })
+    {
+        <ul class="highlights">
+            @foreach (var item in Profile.Highlights)
+            {
+                <li>@Lang.T(item)</li>
+            }
+        </ul>
+    }
     <ul class="links">
         <li><a href="mailto:@Profile.Email">@Profile.Email</a></li>
         <li>@Profile.Location</li>

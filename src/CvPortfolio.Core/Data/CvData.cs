@@ -17,7 +17,7 @@ public static class CvData
         Email: "bonaldo.federico.97@gmail.com",
         Location: "Rosario, Argentina",
         GitHubUrl: "https://github.com/Nbking992",
-        LinkedInUrl: null);
+        LinkedInUrl: "https://www.linkedin.com/in/federico-bonaldo");
 
     public static IReadOnlyList<Project> Projects { get; } = new List<Project>
     {

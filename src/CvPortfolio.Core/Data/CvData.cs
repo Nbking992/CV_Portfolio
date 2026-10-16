@@ -72,8 +72,8 @@ public static class CvData
                 "JavaScript desde Cero",
                 "Introducción a la Ciberseguridad",
                 "Introducción al Pentesting",
-                "Administrador de Redes Linux y Ciberseguridad (en curso)",
-                "Full Ethical Hacking (en curso)"
+                "Administrador de Redes Linux y Ciberseguridad",
+                "Full Ethical Hacking"
             }),
         new(new("Idiomas", "Languages"),
             new[] { "Inglés técnico" })

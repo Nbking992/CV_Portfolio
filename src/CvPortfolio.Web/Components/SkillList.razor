@@ -1,17 +1,58 @@
 @inject ILanguageService Lang
 
-<Section Id="skills" Title="@Lang.Label("skills")">
-    <div class="grid">
+<Section Id="skills" Title="@Lang.Label("skills")" Class="card skills-card">
+    <div class="skill-groups">
         @foreach (var group in Groups)
         {
             <div class="skill-group">
-                <h3>@Lang.T(group.Name)</h3>
-                <ul class="tags">
-                    @foreach (var skill in group.Skills)
-                    {
-                        <li>@Lang.T(skill)</li>
-                    }
-                </ul>
+                @switch (group.Kind)
+                {
+                    case SkillGroupKind.Bars:
+                        <h3 class="group-title">@Lang.T(group.Name)</h3>
+                        var maxYears = Math.Max(1, group.Skills.Max(s => s.Years ?? 0));
+                        <ul class="bars">
+                            @foreach (var skill in group.Skills)
+                            {
+                                var years = skill.Years ?? 0;
+                                var percent = (int)Math.Round(years * 100.0 / maxYears);
+                                <li>
+                                    <div class="bar-top">
+                                        <span>@Lang.T(skill.Name)</span>
+                                        <span class="bar-years">@years @Lang.Label(years == 1 ? "year" : "years")</span>
+                                    </div>
+                                    <div class="bar" aria-hidden="true"><span style="width: @(percent)%"></span></div>
+                                </li>
+                            }
+                        </ul>
+                        break;
+
+                    case SkillGroupKind.Checklist:
+                        <h3 class="group-title">@Lang.T(group.Name)</h3>
+                        <ul class="checklist">
+                            @foreach (var skill in group.Skills)
+                            {
+                                <li><span class="check" aria-hidden="true">✓</span><span>@Lang.T(skill.Name)</span></li>
+                            }
+                        </ul>
+                        break;
+
+                    case SkillGroupKind.Inline:
+                        <p class="inline-line">
+                            <span class="inline-key">@(Lang.T(group.Name).ToLowerInvariant()):</span>
+                            @string.Join(", ", group.Skills.Select(s => Lang.T(s.Name)))
+                        </p>
+                        break;
+
+                    default:
+                        <h3 class="group-title">@Lang.T(group.Name)</h3>
+                        <ul class="chips">
+                            @foreach (var skill in group.Skills)
+                            {
+                                <li>@Lang.T(skill.Name)</li>
+                            }
+                        </ul>
+                        break;
+                }
             </div>
         }
     </div>

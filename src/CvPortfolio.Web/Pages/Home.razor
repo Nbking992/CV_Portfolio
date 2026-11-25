@@ -5,11 +5,18 @@
 
 <PageTitle>@Cv.GetProfile().FullName · CV</PageTitle>
 
-<ProfileHeader Profile="Cv.GetProfile()" />
-<ProjectList Projects="Cv.GetProjects()" />
-<ExperienceList Items="Cv.GetExperiences()" />
-<EducationList Items="Cv.GetEducation()" />
-<SkillList Groups="Cv.GetSkills()" />
+<main class="container layout">
+    <aside class="sidebar">
+        <ProfileHeader Profile="Cv.GetProfile()" />
+        <SkillList Groups="Cv.GetSkills()" />
+    </aside>
+
+    <div class="content">
+        <ProjectList Projects="Cv.GetProjects()" />
+        <ExperienceList Items="Cv.GetExperiences()" />
+        <EducationList Items="Cv.GetEducation()" />
+    </div>
+</main>
 
 @code {
     protected override void OnInitialized() => Lang.Changed += Refresh;

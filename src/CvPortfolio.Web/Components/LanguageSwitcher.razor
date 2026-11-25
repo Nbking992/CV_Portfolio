@@ -2,12 +2,14 @@
 @inject ILanguageService Lang
 
 <div class="lang-switch" role="group" aria-label="Language">
-    <button class="@Css(Language.Es)" @onclick="() => Lang.Set(Language.Es)">ES</button>
-    <button class="@Css(Language.En)" @onclick="() => Lang.Set(Language.En)">EN</button>
+    <button type="button" class="@Css(Language.Es)" aria-pressed="@IsActive(Language.Es)" @onclick="() => Lang.Set(Language.Es)">ES</button>
+    <button type="button" class="@Css(Language.En)" aria-pressed="@IsActive(Language.En)" @onclick="() => Lang.Set(Language.En)">EN</button>
 </div>
 
 @code {
-    private string Css(Language l) => Lang.Current == l ? "active" : string.Empty;
+    private bool IsActive(Language l) => Lang.Current == l;
+
+    private string Css(Language l) => IsActive(l) ? "active" : string.Empty;
 
     protected override void OnInitialized() => Lang.Changed += Refresh;
 

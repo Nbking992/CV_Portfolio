@@ -40,4 +40,36 @@ public class LanguageServiceTests
     {
         Assert.Equal("zzz", new LanguageService().Label("zzz"));
     }
+
+    [Theory]
+    [InlineData("viewCv", "Ver CV", "View CV")]
+    [InlineData("contactMe", "Contactame", "Contact me")]
+    [InlineData("year", "año", "year")]
+    [InlineData("years", "años", "years")]
+    [InlineData("themeLight", "Cambiar a tema claro", "Switch to light theme")]
+    [InlineData("themeDark", "Cambiar a tema oscuro", "Switch to dark theme")]
+    [InlineData("nav.about", "sobre-mí", "about")]
+    [InlineData("prompt.projects", "$ ls ./proyectos", "$ ls ./projects")]
+    public void Label_NewKeys_AreTranslated(string key, string es, string en)
+    {
+        var service = new LanguageService();
+
+        Assert.Equal(es, service.Label(key));
+        service.Set(Language.En);
+        Assert.Equal(en, service.Label(key));
+    }
+
+    [Theory]
+    [InlineData("about")]
+    [InlineData("projects")]
+    [InlineData("experience")]
+    [InlineData("education")]
+    [InlineData("skills")]
+    public void NavLabels_ExistForEverySection(string section)
+    {
+        var service = new LanguageService();
+
+        Assert.NotEqual($"nav.{section}", service.Label($"nav.{section}"));
+        Assert.NotEqual(section, service.Label(section));
+    }
 }

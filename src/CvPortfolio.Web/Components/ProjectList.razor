@@ -1,6 +1,6 @@
 @inject ILanguageService Lang
 
-<Section Id="projects" Title="@Lang.Label("projects")">
+<Section Id="projects" Title="@Lang.Label("projects")" Prompt="@Lang.Label("prompt.projects")">
     @if (Projects.Count == 0)
     {
         <p>@Lang.Label("noProjects")</p>

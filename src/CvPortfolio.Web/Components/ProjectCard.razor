@@ -1,29 +1,69 @@
 @inject ILanguageService Lang
 
-<article class="card">
-    <header>
-        <h3>@Lang.T(Project.Name)</h3>
-        <span class="year">@Project.Year</span>
-    </header>
-    <p>@Lang.T(Project.Description)</p>
-    <ul class="tags">
-        @foreach (var tech in Project.Technologies)
+<article class="card project-card">
+    <div class="project-thumb">
+        @if (Project.ImageUrl is not null)
         {
-            <li>@tech</li>
+            <img src="@Project.ImageUrl" alt="@Lang.T(Project.Name)" loading="lazy" />
         }
-    </ul>
-    <footer>
-        @if (Project.RepositoryUrl is not null)
+        else
         {
-            <a href="@Project.RepositoryUrl" target="_blank" rel="noopener">@Lang.Label("repository")</a>
+            <div class="term" aria-hidden="true">
+                <div class="term-dots"><span></span><span></span><span></span></div>
+                @foreach (var line in PreviewLines)
+                {
+                    var split = line.IndexOf('$');
+                    <div class="term-line">
+                        @if (split >= 0)
+                        {
+                            <span class="term-user">@line.Substring(0, split)</span><span>@line.Substring(split)</span>
+                        }
+                        else
+                        {
+                            <span>@line</span>
+                        }
+                    </div>
+                }
+            </div>
         }
-        @if (Project.DemoUrl is not null)
-        {
-            <a href="@Project.DemoUrl" target="_blank" rel="noopener">@Lang.Label("demo")</a>
-        }
-    </footer>
+    </div>
+
+    <div class="project-body">
+        <div class="project-head">
+            <h3>@Lang.T(Project.Name)</h3>
+            <span class="year">@Project.Year</span>
+        </div>
+        <p class="desc">@Lang.T(Project.Description)</p>
+        <ul class="tags">
+            @foreach (var tech in Project.Technologies)
+            {
+                <li>@tech</li>
+            }
+        </ul>
+        <div class="project-links">
+            @if (Project.RepositoryUrl is not null)
+            {
+                <a class="link-btn" href="@Project.RepositoryUrl" target="_blank" rel="noopener">
+                    <Icon Name="code" />
+                    <span class="label-short">@Lang.Label("repository")</span>
+                    <span class="label-long">@Lang.Label("viewRepository")</span>
+                </a>
+            }
+            @if (Project.DemoUrl is not null)
+            {
+                <a class="link-btn link-btn-soft" href="@Project.DemoUrl" target="_blank" rel="noopener">
+                    <Icon Name="external" />
+                    <span>@Lang.Label("demo")</span>
+                </a>
+            }
+        </div>
+    </div>
 </article>
 
 @code {
     [Parameter, EditorRequired] public Project Project { get; set; } = default!;
+
+    private IReadOnlyList<string> PreviewLines => Project.PreviewLines is { Count: > 0 }
+        ? Project.PreviewLines
+        : new[] { $"dev@cv:~$ cd {Project.Id}", $"dev@cv:~/{Project.Id}$ ls" };
 }

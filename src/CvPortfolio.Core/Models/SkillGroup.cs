@@ -1,3 +1,6 @@
 namespace CvPortfolio.Core.Models;
 
-public sealed record SkillGroup(LocalizedText Name, IReadOnlyList<LocalizedText> Skills);
+public sealed record SkillGroup(
+    LocalizedText Name,
+    IReadOnlyList<Skill> Skills,
+    SkillGroupKind Kind = SkillGroupKind.Chips);

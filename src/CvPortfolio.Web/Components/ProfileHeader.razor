@@ -1,32 +1,68 @@
 @inject ILanguageService Lang
 
-<section id="about" class="hero">
-    <h1>@Profile.FullName</h1>
+<section id="about" class="card profile-card">
+    <div class="profile-top">
+        @if (Profile.PhotoUrl is not null)
+        {
+            <img class="avatar" src="@Profile.PhotoUrl" alt="@Profile.FullName" />
+        }
+        else
+        {
+            <div class="avatar" aria-hidden="true">@Initials</div>
+        }
+        <div class="profile-id">
+            <p class="prompt" aria-hidden="true">$ whoami</p>
+            <h1>@Profile.FullName<span class="cursor" aria-hidden="true">_</span></h1>
+        </div>
+    </div>
+
     <p class="headline">@Lang.T(Profile.Headline)</p>
-    <p>@Lang.T(Profile.Summary)</p>
-    @if (Profile.Highlights is { Count: > 0 })
+    <p class="summary">@Lang.T(Profile.ShortSummary)</p>
+
+    @if (Profile.Tags is { Count: > 0 })
     {
-        <ul class="highlights">
-            @foreach (var item in Profile.Highlights)
+        <ul class="badges">
+            @foreach (var tag in Profile.Tags)
             {
-                <li>@Lang.T(item)</li>
+                <li>#@Lang.T(tag)</li>
             }
         </ul>
     }
-    <ul class="links">
-        <li><a href="mailto:@Profile.Email">@Profile.Email</a></li>
-        <li>@Profile.Location</li>
-        @if (Profile.GitHubUrl is not null)
-        {
-            <li><a href="@Profile.GitHubUrl" target="_blank" rel="noopener">GitHub</a></li>
-        }
+
+    <div class="actions">
         @if (Profile.LinkedInUrl is not null)
         {
-            <li><a href="@Profile.LinkedInUrl" target="_blank" rel="noopener">LinkedIn</a></li>
+            <a class="btn btn-primary" href="@Profile.LinkedInUrl" target="_blank" rel="noopener">
+                <Icon Name="linkedin" />
+                <span>@Lang.Label("viewCv")</span>
+            </a>
         }
-    </ul>
+        <a class="btn btn-secondary" href="mailto:@Profile.Email">
+            <Icon Name="mail" />
+            <span>@Lang.Label("contactMe")</span>
+        </a>
+    </div>
+
+    <div class="profile-foot">
+        @if (Profile.GitHubUrl is not null)
+        {
+            <a class="icon-btn" href="@Profile.GitHubUrl" target="_blank" rel="noopener" aria-label="GitHub">
+                <Icon Name="github" />
+            </a>
+        }
+        <span class="location">
+            <Icon Name="pin" />
+            @Profile.Location
+        </span>
+    </div>
 </section>
 
 @code {
     [Parameter, EditorRequired] public Profile Profile { get; set; } = default!;
+
+    private string Initials => string.Concat(
+        Profile.FullName
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Take(2)
+            .Select(word => char.ToUpperInvariant(word[0])));
 }

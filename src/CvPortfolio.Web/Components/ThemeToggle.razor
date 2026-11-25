@@ -1,0 +1,35 @@
+@implements IDisposable
+@inject IJSRuntime JS
+@inject ILanguageService Lang
+
+@* El ícono muestra el tema al que se va a cambiar: sol estando en oscuro, luna estando en claro. *@
+<button type="button" class="theme-toggle" aria-label="@Label" title="@Label" @onclick="ToggleAsync">
+    <Icon Name="@(_theme == "dark" ? "sun" : "moon")" />
+</button>
+
+@code {
+    private string _theme = "dark";
+
+    private string Label => Lang.Label(_theme == "dark" ? "themeLight" : "themeDark");
+
+    protected override void OnInitialized() => Lang.Changed += Refresh;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        // El tema real lo decide wwwroot/js/theme.js (guardado, o el del sistema, o oscuro).
+        _theme = await JS.InvokeAsync<string>("cvTheme.getTheme");
+        StateHasChanged();
+    }
+
+    private async Task ToggleAsync()
+    {
+        _theme = _theme == "dark" ? "light" : "dark";
+        await JS.InvokeVoidAsync("cvTheme.setTheme", _theme);
+    }
+
+    private void Refresh() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Lang.Changed -= Refresh;
+}

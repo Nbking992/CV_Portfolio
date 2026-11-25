@@ -2,50 +2,91 @@
 @implements IDisposable
 @inject ILanguageService Lang
 @inject ICvService Cv
+@inject IJSRuntime JS
 
 <header class="topbar">
-    <span class="brand">@Cv.GetProfile().FullName</span>
-    <nav>
-        <a href="#about">@Lang.Label("about")</a>
-        <a href="#projects">@Lang.Label("projects")</a>
-        <a href="#experience">@Lang.Label("experience")</a>
-        <a href="#education">@Lang.Label("education")</a>
-        <a href="#skills">@Lang.Label("skills")</a>
-    </nav>
-    <LanguageSwitcher />
+    <div class="topbar-inner">
+        <a class="brand" href="#about">
+            <span class="accent" aria-hidden="true">~/</span><span class="brand-full">@BrandFull</span><span class="brand-short">@BrandShort</span>
+        </a>
+
+        <nav class="top-nav" aria-label="@Lang.Label("navSections")">
+            @foreach (var entry in Sections)
+            {
+                <a href="#@entry.Id">@Lang.Label($"nav.{entry.Id}")</a>
+            }
+        </nav>
+
+        <div class="topbar-actions">
+            <LanguageSwitcher />
+            <ThemeToggle />
+        </div>
+    </div>
 </header>
 
-<main class="container">
+<div class="page">
     @Body
-</main>
+</div>
 
-<nav class="bottom-nav" aria-label="Secciones">
-    <a href="#about">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-7 8-7s8 3 8 7" /></svg>
-        <span>@Lang.Label("about")</span>
-    </a>
-    <a href="#projects">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
-        <span>@Lang.Label("projects")</span>
-    </a>
-    <a href="#experience">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" /></svg>
-        <span>@Lang.Label("experience")</span>
-    </a>
-    <a href="#education">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z" /><path d="M6 11v5c0 1 3 3 6 3s6-2 6-3v-5" /></svg>
-        <span>@Lang.Label("education")</span>
-    </a>
-    <a href="#skills">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z" /></svg>
-        <span>@Lang.Label("skills")</span>
-    </a>
+<footer class="footer">
+    © @DateTime.Now.Year @Cv.GetProfile().FullName · @Lang.Label("footer")
+</footer>
+
+<nav class="bottom-nav" aria-label="@Lang.Label("navSections")">
+    @foreach (var entry in Sections)
+    {
+        <a href="#@entry.Id" aria-label="@Lang.Label(entry.Id)">
+            <Icon Name="@entry.Icon" />
+            <span class="label">@Lang.Label(entry.Id)</span>
+        </a>
+    }
 </nav>
 
 @code {
+    // Debe coincidir con los ids de sección y con el orden visual de la página.
+    private static readonly (string Id, string Icon)[] Sections =
+    {
+        ("about", "user"),
+        ("projects", "folder"),
+        ("experience", "briefcase"),
+        ("education", "cap"),
+        ("skills", "star"),
+    };
+
+    private string BrandFull => string.Join("-", Names).ToLowerInvariant();
+
+    // «Federico Bonaldo» -> «fbonaldo»
+    private string BrandShort => Names.Length > 1
+        ? $"{Names[0][0]}{Names[^1]}".ToLowerInvariant()
+        : BrandFull;
+
+    private string[] Names => Cv.GetProfile().FullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
     protected override void OnInitialized() => Lang.Changed += OnLanguageChanged;
 
-    private void OnLanguageChanged() => InvokeAsync(StateHasChanged);
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) await SyncHtmlLangAsync();
+    }
+
+    private void OnLanguageChanged()
+    {
+        _ = SyncHtmlLangAsync();
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    // Mantiene <html lang> en sintonía con el idioma elegido (lectores de pantalla, traductores).
+    private async Task SyncHtmlLangAsync()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("cvTheme.setLang", Lang.Current == Language.En ? "en" : "es");
+        }
+        catch (JSException)
+        {
+            // Sin JS no pasa nada: la página sigue funcionando.
+        }
+    }
 
     public void Dispose() => Lang.Changed -= OnLanguageChanged;
 }

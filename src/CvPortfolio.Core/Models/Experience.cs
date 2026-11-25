@@ -5,7 +5,7 @@ public sealed record Experience(
     string Company,
     int StartYear,
     int? EndYear,
-    LocalizedText Description)
+    IReadOnlyList<LocalizedText> Bullets)
 {
     public bool IsCurrent => EndYear is null;
 }

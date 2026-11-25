@@ -1,17 +1,13 @@
 @inject ILanguageService Lang
 
-<Section Id="education" Title="@Lang.Label("education")">
-    <div class="timeline">
+<Section Id="education" Title="@Lang.Label("education")" Prompt="@Lang.Label("prompt.education")">
+    <div class="grid">
         @foreach (var item in Items)
         {
-            <article class="entry">
-                <div class="entry-body">
-                    <div class="entry-head">
-                        <h3>@Lang.T(item.Title)</h3>
-                        <span class="period">@item.StartYear – @(item.EndYear?.ToString() ?? Lang.Label("present"))</span>
-                    </div>
-                    <p class="org">@item.Institution</p>
-                </div>
+            <article class="card edu-card">
+                <span class="edu-period">@item.StartYear → @(item.EndYear?.ToString() ?? Lang.Label("present"))</span>
+                <h3>@Lang.T(item.Title)</h3>
+                <p class="org">@item.Institution</p>
             </article>
         }
     </div>

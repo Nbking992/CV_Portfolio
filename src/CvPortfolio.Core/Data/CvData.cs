@@ -16,15 +16,19 @@ public static class CvData
         Summary: new(
             "Desarrollador de software en el área de Sistemas del Hospital Español de Rosario, con experiencia en Visual FoxPro y PostgreSQL, y soporte técnico de infraestructura. Me formo en ciberseguridad, hacking ético y pentesting, practicando con retos CTF.",
             "Software developer in the Systems department of Hospital Español in Rosario, with experience in Visual FoxPro and PostgreSQL, plus IT infrastructure support. I am training in cybersecurity, ethical hacking and pentesting, practicing with CTF challenges."),
+        ShortSummary: new(
+            "Desarrollador en el área de Sistemas del Hospital Español de Rosario. Me formo en ciberseguridad y hacking ético.",
+            "Developer in the Systems department of Hospital Español in Rosario. Training in cybersecurity and ethical hacking."),
         Email: "bonaldo.federico.97@gmail.com",
-        Location: "Rosario, Argentina",
+        Location: "Rosario, AR",
         GitHubUrl: "https://github.com/Nbking992",
         LinkedInUrl: "https://www.linkedin.com/in/federico-bonaldo",
-        Highlights: new LocalizedText[]
+        Tags: new LocalizedText[]
         {
-            new("Estudiante de ciberseguridad", "Cybersecurity student"),
-            new("Apasionado por el hacking ético y los CTFs", "Passionate about ethical hacking and CTFs"),
-            new("En constante aprendizaje", "Always learning")
+            new("ciberseguridad", "cybersecurity"),
+            new("hacking-ético", "ethical-hacking"),
+            LocalizedText.Same("ctf"),
+            new("siempre-aprendiendo", "always-learning")
         });
 
     public static IReadOnlyList<Project> Projects { get; } = new List<Project>
@@ -37,7 +41,8 @@ public static class CvData
                 "Solutions to the OverTheWire Bandit challenges with step-by-step writeups. Hands-on practice with Linux, the terminal and security fundamentals."),
             Technologies: new[] { "Bash", "Linux", "SSH", "CTF" },
             Year: 2026,
-            RepositoryUrl: "https://github.com/Nbking992/practice-over-the-wire"),
+            RepositoryUrl: "https://github.com/Nbking992/practice-over-the-wire",
+            PreviewLines: new[] { "bandit0@bandit:~$ cat readme", "bandit0@bandit:~$ ls -la" }),
         new(
             Id: "cv-portfolio",
             Name: LocalizedText.Same("CV Portfolio"),
@@ -46,7 +51,8 @@ public static class CvData
                 "This site: a bilingual web CV built with Blazor WebAssembly and published on GitHub Pages."),
             Technologies: new[] { "C#", ".NET 8", "Blazor WebAssembly", "GitHub Actions" },
             Year: 2026,
-            RepositoryUrl: "https://github.com/Nbking992/CV_Portfolio")
+            RepositoryUrl: "https://github.com/Nbking992/CV_Portfolio",
+            PreviewLines: new[] { "dev@cv:~$ dotnet run", "dev@cv:~$ git push origin main" })
     };
 
     public static IReadOnlyList<Experience> Experiences { get; } = new List<Experience>
@@ -56,62 +62,74 @@ public static class CvData
             Company: "Hospital Español (Rosario, Argentina)",
             StartYear: 2021,
             EndYear: null,
-            Description: new(
-                "Desarrollo y mantenimiento de aplicaciones en Visual FoxPro, orientadas a la automatización de procesos, el manejo de archivos, el envío de correos y los circuitos de trabajo, aplicando metodologías ágiles y principios SOLID. Desarrollo de consultas, subconsultas y operaciones CRUD sobre PostgreSQL. Soporte técnico (help desk): gestión de software, reparación de equipos e instalación de puestos de trabajo.",
-                "Development and maintenance of Visual FoxPro applications focused on process automation, file handling, email delivery and work flows, applying agile methodologies and SOLID principles. Development of queries, subqueries and CRUD operations on PostgreSQL. Technical support (help desk): software management, PC repair and workstation setup."))
+            Bullets: new LocalizedText[]
+            {
+                new(
+                    "Desarrollo y mantenimiento de aplicaciones en Visual FoxPro para automatizar procesos, archivos, correos y circuitos de trabajo.",
+                    "Development and maintenance of Visual FoxPro applications to automate processes, files, emails and work flows."),
+                new(
+                    "Consultas, subconsultas y operaciones CRUD sobre PostgreSQL.",
+                    "Queries, subqueries and CRUD operations on PostgreSQL."),
+                new(
+                    "Metodologías ágiles y principios SOLID.",
+                    "Agile methodologies and SOLID principles."),
+                new(
+                    "Help desk: gestión de software, reparación de equipos e instalación de puestos de trabajo.",
+                    "Help desk: software management, PC repair and workstation setup.")
+            })
     };
 
     public static IReadOnlyList<Education> Education { get; } = new List<Education>
     {
         new(
             Title: new(
-                "Técnico Superior en Soporte de Infraestructura de Tecnología de la Información",
-                "Higher Technician in Information Technology Infrastructure Support"),
-            Institution: "Instituto de Educación Técnica N°55, Rosario, Argentina",
+                "Técnico Superior en Soporte de Infraestructura de TI",
+                "Higher Technician in IT Infrastructure Support"),
+            Institution: "Instituto de Educación Técnica N°55",
             StartYear: 2019,
             EndYear: 2021),
         new(
             Title: new("Técnico en Electrónica", "Electronics Technician"),
-            Institution: "E.E.T.N 8013 San José, Rosario, Argentina",
+            Institution: "E.E.T.N 8013 San José",
             StartYear: 2010,
             EndYear: 2016)
     };
 
     public static IReadOnlyList<SkillGroup> Skills { get; } = new List<SkillGroup>
     {
-        new(new("Lenguajes y bases de datos", "Languages and databases"),
-            new LocalizedText[]
+        new(new("Lenguajes y SO · años", "Languages and OS · years"),
+            new Skill[]
             {
-                new("Visual FoxPro 6/9 (4 años)", "Visual FoxPro 6/9 (4 years)"),
-                new("PostgreSQL (4 años)", "PostgreSQL (4 years)"),
-                new("HTML/CSS (2 años)", "HTML/CSS (2 years)")
-            }),
-        new(new("Sistemas operativos", "Operating systems"),
-            new LocalizedText[]
-            {
-                new("Windows (4 años)", "Windows (4 years)"),
-                new("Linux / Kali Linux (1 año)", "Linux / Kali Linux (1 year)")
-            }),
+                Skill.Same("Visual FoxPro 6/9", 4),
+                Skill.Same("PostgreSQL", 4),
+                Skill.Same("Windows", 4),
+                Skill.Same("HTML/CSS", 2),
+                Skill.Same("Linux / Kali Linux", 1)
+            },
+            SkillGroupKind.Bars),
         new(new("Ciberseguridad", "Cybersecurity"),
-            new LocalizedText[]
+            new Skill[]
             {
-                new("Linux y scripting", "Linux and scripting"),
-                new("Redes", "Networking"),
-                new("Resolución de retos (CTFs)", "Challenge solving (CTFs)"),
-                new("Fundamentos de seguridad informática", "Information security fundamentals"),
-                LocalizedText.Same("Bash"),
-                new("Git y GitHub", "Git and GitHub")
-            }),
+                new(new("Linux y scripting", "Linux and scripting")),
+                new(new("Redes", "Networking")),
+                new(new("Resolución de retos (CTFs)", "Challenge solving (CTFs)")),
+                new(new("Fundamentos de seguridad informática", "Information security fundamentals")),
+                Skill.Same("Bash"),
+                new(new("Git y GitHub", "Git and GitHub"))
+            },
+            SkillGroupKind.Chips),
         new(new("Cursos", "Courses"),
-            new LocalizedText[]
+            new Skill[]
             {
-                new("JavaScript desde Cero", "JavaScript from Scratch"),
-                new("Introducción a la Ciberseguridad", "Introduction to Cybersecurity"),
-                new("Introducción al Pentesting", "Introduction to Pentesting"),
-                new("Administrador de Redes Linux y Ciberseguridad", "Linux Network Administrator and Cybersecurity"),
-                LocalizedText.Same("Full Ethical Hacking")
-            }),
+                new(new("JavaScript desde Cero", "JavaScript from Scratch")),
+                new(new("Introducción a la Ciberseguridad", "Introduction to Cybersecurity")),
+                new(new("Introducción al Pentesting", "Introduction to Pentesting")),
+                new(new("Administrador de Redes Linux y Ciberseguridad", "Linux Network Administrator and Cybersecurity")),
+                Skill.Same("Full Ethical Hacking")
+            },
+            SkillGroupKind.Checklist),
         new(new("Idiomas", "Spoken languages"),
-            new LocalizedText[] { new("Inglés técnico", "Technical English") })
+            new Skill[] { new(new("Inglés técnico", "Technical English")) },
+            SkillGroupKind.Inline)
     };
 }
